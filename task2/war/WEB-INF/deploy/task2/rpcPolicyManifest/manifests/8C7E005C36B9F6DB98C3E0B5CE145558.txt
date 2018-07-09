@@ -1,0 +1,2 @@
+serviceClass: try1.client.loginservice.LoginService
+path: 9924845D8214CF491BAB99A60DE4F6A7.gwt.rpc
