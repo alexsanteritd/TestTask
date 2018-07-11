@@ -13,6 +13,11 @@
 		<servlet-name>login</servlet-name>
 		<servlet-class>try1.server.LoginServiceImp</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>data</servlet-name>
+		<servlet-class>try1.server.DataControllerImp</servlet-class>
+	</servlet>
+
 
 	<servlet-mapping>
 		<servlet-name>login</servlet-name>
@@ -22,9 +27,10 @@
 		<servlet-name>SingUp</servlet-name>
 		<url-pattern>/task2/SingUpService</url-pattern>
 	</servlet-mapping>
-
-
-
+	<servlet-mapping>
+		<servlet-name>data</servlet-name>
+		<url-pattern>/task2/dataService</url-pattern>
+	</servlet-mapping>
 
 
 	<!-- Default page to serve -->

@@ -1,9 +1,11 @@
 package try1.server.model;
 
-import java.util.List;
+import org.hibernate.SessionFactory;
+import org.springframework.transaction.annotation.Transactional;
+@Transactional
+public class UserDao extends AbstractBaseDao<User>{
+	public UserDao(SessionFactory sessionFactory) {
+		super(User.class, sessionFactory);
+	}
 
-public interface UserDao {
-	public List<User> getAll();
-	public User getByEmail(String email);
-	public void addUser(User user);
 }

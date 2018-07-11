@@ -24,6 +24,7 @@ public class Controller implements ControllerI {
 			activePageController.onEnd();
 		}
 		rootPanel.clear();
+		rootPanel.setVisible(true);
 		pageController.onStart();
 		rootPanel.add(pageController.getPageContent());
 		activePageController = pageController;

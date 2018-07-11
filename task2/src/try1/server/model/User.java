@@ -1,38 +1,59 @@
 package try1.server.model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "users")
 public class User {
 	@Id
-	@Column(name = "email")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", nullable=false)
+	long id;
+	@Column(name = "email", nullable=false)
 	String email;
-	@Column(name = "passhash")
+	@Column(name = "passhash", nullable=false)
 	String pass;
-	@Column(name = "role")
+	@Column(name = "role", nullable=false)
 	String role;
-	@Column(name = "registrationsdate")
-	private java.sql.Timestamp registationsDate;
+	@Column(name = "registrationsdate", nullable=false)
+	private Timestamp registationsDate;
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(unique = true, name = "email")
+	@JoinColumn(name="id")
 	private Bill bill;
 
-	public User() {
+	public User() {	
+		// TODO Auto-generated constructor stub
 	}
 
-	public Bill getBill() {
-		return bill;
+	public User(String email, String pass, String role) {
+		this.email = email;
+		this.pass = pass;
+		this.role = role;
+		this.registationsDate=new Timestamp(System.currentTimeMillis());
 	}
 
-	public void setBill(Bill bill) {
-		this.bill = bill;
+	
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getEmail() {
@@ -45,21 +66,6 @@ public class User {
 
 	public String getPass() {
 		return pass;
-	}
-
-	public User(String email, String pass, String role, Bill bill) {
-		this.email = email;
-		this.pass = pass;
-		this.role = role;
-		this.bill = bill;
-		this.registationsDate = new java.sql.Timestamp(System.currentTimeMillis());
-	}
-
-	public User(String email, String pass, String role) {
-		this.email = email;
-		this.pass = pass;
-		this.role = role;
-		this.registationsDate = new java.sql.Timestamp(System.currentTimeMillis());
 	}
 
 	public java.sql.Timestamp getRegistationsDate() {
@@ -82,7 +88,21 @@ public class User {
 		this.role = role;
 	}
 
-	public String toString() {
-		return email + " " + pass + " " + role + " " + registationsDate;
+  public Bill getBill() {
+		return bill;
 	}
+
+	public void setBill(Bill bill) {
+		this.bill = bill;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", pass=" + pass + ", role=" + role + ", registationsDate="
+				+ registationsDate + ", bill=" + bill + "]";
+	}
+
+
+
+
 }

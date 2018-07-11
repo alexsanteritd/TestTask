@@ -2,24 +2,45 @@ package try1.server.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "usersbilling")
 public class Bill {
 	@Id
-	@Column(name = "email")
-	private String email;
+	@Column(name = "id")
+	private long id;
+
 	@Column(name = "bill")
 	private float billScore;
 
-	public String getEmail() {
-		return email;
+	
+public Bill() {
+	// TODO Auto-generated constructor stub
+}
+	@Override
+	public String toString() {
+		return "Bill [id=" + id + ", billScore=" + billScore + "]";
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public Bill(float billScore, long id) {
+		this.billScore = billScore;
+		this.id=id;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public float getBillScore() {
@@ -27,26 +48,6 @@ public class Bill {
 	}
 
 	public void setBillScore(float bill) {
-		this.billScore = bill;
-	}
-
-	@Override
-	public String toString() {
-		return "Bill [email=" + email + ", bill=" + billScore + "]";
-	}
-
-	public Bill() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public Bill(String email) {
-		this.email = email;
-		billScore = 0;
-	}
-
-	public Bill(String email, float bill) {
-		super();
-		this.email = email;
 		this.billScore = bill;
 	}
 

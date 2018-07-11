@@ -12,6 +12,7 @@ public class ClientUser implements Serializable {
 	String accsessLevel;
 	Timestamp regDate;
 	String email;
+	
 	public ClientUser(float billScore, String email, Timestamp regDate) {
 		super();
 		this.billScore = billScore;
@@ -51,7 +52,7 @@ public class ClientUser implements Serializable {
 	}
 
 	public String getEmail() {
-		return null;
+		return email;
 	}
 
 }

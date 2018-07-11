@@ -9,13 +9,9 @@ h1 {
   text-align: center;
   margin-bottom: -10px;
 }
-SignUp{
+hyperlink{
 	color: blue;
 	text-decoration: underline;
-}
-.sendButton {
-  display: block;
-  font-size: 16pt;
 }
 
 /** Most GWT widgets already have a style name defined */

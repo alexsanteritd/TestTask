@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 
 import try1.client.controller.Controller;
 import try1.client.controller.ControllerI;
+import try1.client.pagescontrollers.AdminPageController;
 import try1.client.pagescontrollers.LoginPageController;
 import try1.client.pagescontrollers.PagesController;
 import try1.client.pagescontrollers.SignUpPageController;
@@ -34,10 +35,10 @@ public class Task2 implements EntryPoint {
 		Map<String, PagesController> pagesMap=new HashMap<String, PagesController>();
 		ControllerI cont=new Controller(RootPanel.get(contentContainerId),pagesMap);
 		pagesMap.put("LOGIN",new LoginPageController(cont,"SIGN_UP"));
-		pagesMap.put("ADMIN", null);
+		pagesMap.put("ADMIN", new AdminPageController(cont));
 		pagesMap.put("USER", new UserPageController(cont,"LOGIN"));
 		pagesMap.put("SIGN_UP", new SignUpPageController(cont,"LOGIN"));
-		cont.swapTo("LOGIN");
+		cont.swapTo("ADMIN");
 		
 		/**/
 

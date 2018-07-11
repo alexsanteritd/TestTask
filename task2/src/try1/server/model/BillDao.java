@@ -1,5 +1,11 @@
 package try1.server.model;
 
-public interface BillDao {
-	public void addBill(Bill bill);
+import org.hibernate.SessionFactory;
+
+public class BillDao extends AbstractBaseDao<Bill>{
+
+	public BillDao(SessionFactory sessionFactory) {
+		super(Bill.class, sessionFactory);
+	}
+
 }
