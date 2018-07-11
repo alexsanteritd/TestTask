@@ -1,2 +1,0 @@
-serviceClass: try1.client.registerservice.SingUpService
-path: 9608290025E453C01E206AD2D4DBC15B.gwt.rpc

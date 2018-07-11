@@ -1,4 +1,0 @@
-# Module task2
-# RPC service class, partial path of RPC policy file
-try1.client.loginservice.LoginService, 9924845D8214CF491BAB99A60DE4F6A7.gwt.rpc
-try1.client.registerservice.SingUpService, 9608290025E453C01E206AD2D4DBC15B.gwt.rpc
