@@ -42,7 +42,7 @@ public class AccountHistory {
 	long credit;
 
 	@Column(name = "account")
-	long account;
+	long amount;
 
 	@Column(name = "date")
 	Timestamp date;
@@ -50,7 +50,7 @@ public class AccountHistory {
 	public AccountHistory() {
 		credit = 0;
 		debet = 0;
-		account = 0;
+		amount = 0;
 		date = new Timestamp(System.currentTimeMillis());
 	}
 
@@ -58,7 +58,7 @@ public class AccountHistory {
 
 		this.credit = credit;
 		this.debet = debet;
-		this.account = account;
+		this.amount = account;
 		this.date = new Timestamp(System.currentTimeMillis());
 	}
 
@@ -120,12 +120,12 @@ public class AccountHistory {
 		this.debet = debet;
 	}
 
-	public long getAccount() {
-		return account;
+	public long getAmount() {
+		return amount;
 	}
 
-	public void setAccount(long account) {
-		this.account = account;
+	public void setAmount(long account) {
+		this.amount = account;
 	}
 
 	public Timestamp getDate() {
@@ -139,7 +139,7 @@ public class AccountHistory {
 	@Override
 	public String toString() {
 		return "AccountHistory [id=" + id + ", user=" + user.getEmail() + ", admin=" + admin.getEmail() + ", debet="
-				+ debet + ", credit=" + credit + ", account=" + account + ", date=" + date + "]";
+				+ debet + ", credit=" + credit + ", account=" + amount + ", date=" + date + "]";
 	}
 
 }

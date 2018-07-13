@@ -18,7 +18,7 @@ public class CUserFactory {
 			AccountHistory ah = u.getAccountHistory();
 			long account = 0;
 			if (ah != null) {
-				account = ah.getAccount();
+				account = ah.getAmount();
 			}
 			cUserList.add(new CUser(u.getId(),account, u.getRegistationsDate(), u.getEmail()));
 		}
@@ -30,7 +30,7 @@ public class CUserFactory {
 		AccountHistory ah = user.getAccountHistory();
 		long account = 0;
 		if (ah != null) {
-			account = ah.getAccount();
+			account = ah.getAmount();
 		};
 		return new CUser(user.getId(),account, user.getRegistationsDate(), user.getEmail());
 

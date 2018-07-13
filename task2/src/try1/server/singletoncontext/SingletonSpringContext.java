@@ -6,26 +6,22 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import try1.server.config.UserConfiguration;
 
 public final class SingletonSpringContext {
-	private ApplicationContext context;
-	private static SingletonSpringContext instance;
+	private static ApplicationContext context;
 
 	private SingletonSpringContext() {
-		this.context =  new AnnotationConfigApplicationContext(UserConfiguration.class);
+		this.context = new AnnotationConfigApplicationContext(UserConfiguration.class);
 	}
 
-	public static SingletonSpringContext getInstance() {
-		if (instance == null) {
-			synchronized (SingletonSpringContext.class) {
-				if (instance == null) {
-					instance = new SingletonSpringContext();
-				}
-			}
-		}
-		return instance;
-	}
 
 	public ApplicationContext getContext() {
 		return context;
+	}
+
+	public static synchronized <T> T getBean(Class<T> classType) {
+		if(context==null) {
+			new SingletonSpringContext();
+		}
+		return context.getBean(classType);
 	}
 
 }

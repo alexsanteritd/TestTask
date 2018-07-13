@@ -28,7 +28,7 @@ public class AdminPageController implements PagesController {
 
 	public AdminPageController(ControllerI cont) {
 		this();
-		this.cont=cont;
+		this.cont = cont;
 	}
 
 	public AdminPageController() {
@@ -37,7 +37,7 @@ public class AdminPageController implements PagesController {
 	@Override
 	public void onStart() {
 		ap = new AdminPage();
-		md = new MyDialog();				
+		md = new MyDialog();
 		dataService = GWT.create(DataService.class);
 		ap.getLogAnchor().addClickHandler(new ClickHandler() {
 			@Override
@@ -67,32 +67,48 @@ public class AdminPageController implements PagesController {
 		md.getOk().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				md.hide();
-				try {
-				dataService.updateScore(md.getScoreBoxValue(), md.getCUser().getId(),cont.getClientUser().getId(), new AsyncCallback<Long>() {
+				if (md.getScoreBoxValue() > 0) {
+					dataService.replenishAccount(md.getScoreBoxValue(), md.getCUser().getId(),
+							cont.getClientUser().getId(), new AsyncCallback<Long>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						Window.alert(caught.toString());
-					}
+								@Override
+								public void onFailure(Throwable caught) {
+									Window.alert(caught.toString());
+								}
 
-					@Override
-					public void onSuccess(Long result) {
-						md.getCUser().setAccount(result);
-						ap.getDataTable().redraw();
-					}
-				});
-				}catch(Exception e) {
-					Window.alert(e.toString());
+								@Override
+								public void onSuccess(Long result) {
+									md.getCUser().setAccount(result);
+									ap.getDataTable().redraw();
+								}
+							});
+				} else {
+					dataService.debitAnAccount(-md.getScoreBoxValue(), md.getCUser().getId(),
+							cont.getClientUser().getId(), new AsyncCallback<Long>() {
+
+								@Override
+								public void onFailure(Throwable caught) {
+									Window.alert(caught.toString());
+								}
+
+								@Override
+								public void onSuccess(Long result) {
+									md.getCUser().setAccount(result);
+									ap.getDataTable().redraw();
+								}
+							});
 				}
 				md.getScoreBox().setText("");
 			}
 		});
 
 		md.getNo().addClickHandler(new ClickHandler() {
+
 			public void onClick(ClickEvent event) {
 				md.hide();
 				md.getScoreBox().setText("");
 			}
+
 		});
 		ap.getDataTable().redraw();
 		ap.getDataTable().setVisible(true);

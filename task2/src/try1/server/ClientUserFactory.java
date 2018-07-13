@@ -11,7 +11,7 @@ public class ClientUserFactory {
 			id = user.getId();
 		}
 		if (user.getAccountHistory() != null) {
-			account = user.getAccountHistory().getAccount();
+			account = user.getAccountHistory().getAmount();
 		}
 		return new ClientUser(id, user.getRole(), account);
 	}

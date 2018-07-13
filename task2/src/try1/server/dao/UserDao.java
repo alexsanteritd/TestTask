@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ public class UserDao extends AbstractBaseDao<User> {
 		super(User.class, sessionFactory);
 	}
 
+	
 	@SuppressWarnings("unchecked")
 	public User findByEmail(String email) {
 		List<User> list = (List<User>) getSession().createQuery("FROM User u WHERE u.email=:email")
@@ -81,7 +83,7 @@ public class UserDao extends AbstractBaseDao<User> {
 			ah.setDate((Timestamp) ob[8]);
 			ah.setDebet(((BigInteger) ob[9]).longValue());
 			ah.setCredit(((BigInteger) ob[10]).longValue());
-			ah.setAccount(((BigInteger) ob[11]).longValue());
+			ah.setAmount(((BigInteger) ob[11]).longValue());
 			user.setAccountHistory(ah);
 			usersList.add(user);
 		}
@@ -114,7 +116,7 @@ public class UserDao extends AbstractBaseDao<User> {
 			ah.setDate((Timestamp) ob[8]);
 			ah.setDebet(((BigInteger) ob[9]).longValue());
 			ah.setCredit(((BigInteger) ob[10]).longValue());
-			ah.setAccount(((BigInteger) ob[11]).longValue());
+			ah.setAmount(((BigInteger) ob[11]).longValue());
 			user.setAccountHistory(ah);
 			usersList.add(user);
 		}

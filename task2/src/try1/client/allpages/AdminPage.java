@@ -47,7 +47,7 @@ public class AdminPage implements Pages {
 	private Button searchButton = new Button("Поиск");
 	private Anchor logAnchor = new Anchor("Журнал пополнений");
 	private CellTable<CUser> dataTable;
-	DataProvider dataProvider=new DataProvider();
+	DataProvider dataProvider = new DataProvider();
 	Column<CUser, String> email;
 
 	public Button getSearchButton() {
@@ -67,74 +67,77 @@ public class AdminPage implements Pages {
 	}
 
 	public AdminPage() {
-		
+
 		int windowHeight = Window.getClientHeight();
 		int windowWidth = Window.getClientWidth();
 		dataTable = new CellTable<CUser>();
 		dataTable.setPageSize(10);
 
-		email = new Column<CUser, String>(new ClickableTextCell(
-				new SafeHtmlRenderer<String>() {
+		email = new Column<CUser, String>(new ClickableTextCell(new SafeHtmlRenderer<String>() {
 
-					@Override
-					public SafeHtml render(String object) {
-						 SafeHtmlBuilder builder = new SafeHtmlBuilder();
-						 builder.appendHtmlConstant("<font color=\"blue\"><u>").appendEscaped(object).appendHtmlConstant("</u></font>");
-						return builder.toSafeHtml();
-					}
+			@Override
+			public SafeHtml render(String object) {
+				SafeHtmlBuilder builder = new SafeHtmlBuilder();
+				builder.appendHtmlConstant("<font color=\"blue\"><u>").appendEscaped(object)
+						.appendHtmlConstant("</u></font>");
+				return builder.toSafeHtml();
+			}
 
-					@Override
-					public void render(String object, SafeHtmlBuilder builder) {
-						// TODO Auto-generated method stub
-						
-					}
-					
-				})){
+			@Override
+			public void render(String object, SafeHtmlBuilder builder) {
+				// TODO Auto-generated method stub
+
+			}
+
+		})) {
 
 			@Override
 			public String getValue(CUser object) {
 				// TODO Auto-generated method stub
 				return object.getEmail();
 			}
-			
+
 		};
-		
-		
-		
+
 		TextColumn<CUser> Account = new TextColumn<CUser>() {
 			@Override
 			public String getValue(CUser object) {
-				long account=object.getAccount();
-				String decimal="";
-				int fraction=(int)(account%100);
-				if (fraction<=0) {
-					decimal="00";
-				}else if(fraction<10) {
-					decimal="0"+fraction;
+				long account = object.getAccount();
+				String decimal = "";
+				String sign = "";
+				if (account < 0) {
+					account=-account;
+					sign="-";
 				}
-				else {
-					decimal=String.valueOf(fraction);
+				int fraction = (int) (account % 100);
+				if (fraction == 0) {
+					decimal = "00";
+				} else if (fraction < 10) {
+					decimal = "0" + fraction;
+				} else {
+					decimal = ""+fraction;
 				}
-				return account/100+"."+decimal+" $";
+				return sign+account / 100 + "." + decimal + " $";
 			}
 		};
-		
+
 		TextColumn<CUser> regData = new TextColumn<CUser>() {
 			@Override
 			public String getValue(CUser object) {
 				return object.getRegDate().toString();
 			}
 		};
-		
+
 		dataTable.setWidth("500px");
 		dataTable.setHeight("500px");
 		dataTable.addColumn(email, "email");
 		dataTable.addColumn(Account, "Счет");
 		dataTable.addColumn(regData, "Дата регистрации");
 		dataTable.setVisible(true);
-		
-		dataProvider.addDataDisplay(dataTable);;
-		
+
+		dataProvider.addDataDisplay(dataTable);
+		;
+
 		final NoSelectionModel<CUser> selectionModel = new NoSelectionModel<CUser>();
 		dataTable.setSelectionModel(selectionModel);
 
@@ -144,7 +147,7 @@ public class AdminPage implements Pages {
 		cellFormatter.setColSpan(0, 0, 3);
 		cellFormatter.setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		decPanel.setWidget(dataLayout);
-		
+
 		emailBox.setWidth("150px");
 		dataLayout.setWidget(1, 1, logAnchor);
 
@@ -157,16 +160,15 @@ public class AdminPage implements Pages {
 		mainpanel.setWidth(windowWidth / 2 + "px");
 		mainpanel.setHeight(windowHeight * 0.6 + "px");
 		mainpanel.add(dataLayout);
-		
+
 		SimplePager pager;
 		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-		
-		
-		pager = new SimplePager(TextLocation.CENTER, pagerResources, true, 0,true);
+
+		pager = new SimplePager(TextLocation.CENTER, pagerResources, true, 0, true);
 		pager.setDisplay(dataTable);
 
 		pager.setPageSize(10);
-		dataLayout.setWidget(4,0,pager);
+		dataLayout.setWidget(4, 0, pager);
 	}
 
 	public String getEmailBoxText() {

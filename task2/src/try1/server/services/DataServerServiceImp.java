@@ -28,25 +28,56 @@ public class DataServerServiceImp implements DataServerService {
 	}
 
 	@Override
-	public Long changeAccount(long difValue, long userId, long adminId) {
-		AccountHistory accountHistory = acountHistoryDao.getAccountByUserId(userId);
-		long account = 0;
-		if (difValue != 0 && userId > 0 && adminId > 0) {
-			if (accountHistory != null) {
-				AccountHistory newAccountHistory;
-				account = accountHistory.getAccount();
-				if (difValue > 0) {
-					account += difValue;
-					newAccountHistory = new AccountHistory(difValue, 0, account);
-				} else {
-					account += difValue;
-					newAccountHistory = new AccountHistory(0, difValue, account);
-				}
-				newAccountHistory.setUserId(userId);
-				newAccountHistory.setAdmiId(adminId);
-				acountHistoryDao.create(newAccountHistory);
-			}
+	public Long replenishAccount(long repelishAmount, long userId, long adminId) throws Exception {
+		if (repelishAmount < 0) {
+			throw new Exception("Пополнение счета отрицательным значением суммы");
 		}
+		if (repelishAmount == 0)
+			return 0l;
+		if (userId <= 0)
+			throw new Exception("Неккоректный id пользователя");
+		if (adminId <= 0)
+			throw new Exception("Неккоректный id администратора");
+		AccountHistory accountHistory = acountHistoryDao.getAccountByUserIdWithBlock(userId);
+		long account = 0;
+		if (accountHistory == null) {
+			acountHistoryDao.unlock();
+			throw new Exception("Истории пользователя не существует");
+		}
+		AccountHistory newAccountHistory;
+		account = accountHistory.getAmount();
+		account += repelishAmount;
+		newAccountHistory = new AccountHistory(repelishAmount, 0, account);
+		newAccountHistory.setUserId(userId);
+		newAccountHistory.setAdmiId(adminId);
+		acountHistoryDao.create(newAccountHistory);
+		return account;
+	}
+
+	@Override
+	public Long debitAnAccount(long debitAmount, long userId, long adminId) throws Exception {
+		if (debitAmount < 0) {
+			throw new Exception("Списание со счета отрицательным значением суммы");
+		}
+		if (debitAmount == 0)
+			return 0l;
+		if (userId <= 0)
+			throw new Exception("Неккоректный id пользователя");
+		if (adminId <= 0)
+			throw new Exception("Неккоректный id администратора");
+		AccountHistory accountHistory = acountHistoryDao.getAccountByUserIdWithBlock(userId);
+		long account = 0;
+		if (accountHistory == null) {
+			acountHistoryDao.unlock();
+			throw new Exception("Истории пользователя не существует");
+		}
+		AccountHistory newAccountHistory;
+		account = accountHistory.getAmount();
+		account -= debitAmount;
+		newAccountHistory = new AccountHistory(0, debitAmount, account);
+		newAccountHistory.setUserId(userId);
+		newAccountHistory.setAdmiId(adminId);
+		acountHistoryDao.create(newAccountHistory);
 		return account;
 	}
 }

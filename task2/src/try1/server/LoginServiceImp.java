@@ -4,14 +4,14 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import try1.client.loginservice.LoginService;
 import try1.client.model.ClientUser;
-import try1.server.services.AutService;
+import try1.server.services.AuthorizationServise;
 import try1.server.singletoncontext.SingletonSpringContext;
 
 public class LoginServiceImp extends RemoteServiceServlet implements LoginService {
 	/**
 	 * 
 	 */
-	AutService autService;
+	AuthorizationServise authorizationServise;
 	private static final long serialVersionUID = -1933338621121835068L;
 
 	@Override
@@ -19,11 +19,11 @@ public class LoginServiceImp extends RemoteServiceServlet implements LoginServic
 		return ClientUserFactory.to(getAutService().loginUser(login, password));
 	}
 
-	private AutService getAutService() {
-		if (autService == null) {
-			autService=SingletonSpringContext.getInstance().getContext().getBean(AutService.class);
+	private AuthorizationServise getAutService() {
+		if (authorizationServise == null) {
+			authorizationServise=SingletonSpringContext.getBean(AuthorizationServise.class);
 		}
-		return autService;
+		return authorizationServise;
 	}
 
 }

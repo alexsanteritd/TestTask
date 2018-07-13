@@ -18,29 +18,34 @@ public class DataControllerImp extends RemoteServiceServlet implements DataServi
 	 */
 	private static final long serialVersionUID = 6414105922524292637L;
 
-	DataServerService dataSer;
-	
+	DataServerService dataServerService;
+
 	@Override
 	public List<CUser> getData(Range range) {
-		List<User> usersList=getDataSer().getData(range.getStart(), range.getLength());
+		List<User> usersList = getDataServerService().getData(range.getStart(), range.getLength());
 		return CUserFactory.to(usersList);
 	}
 
 	@Override
 	public long getUsersCount() {
-		return getDataSer().getUsersCount();
+		return getDataServerService().getUsersCount();
 	}
 
 	@Override
-	public Long updateScore(long difValue, long userID,long adminID) {
-		return getDataSer().changeAccount(difValue, userID,adminID);
-		
+	public Long replenishAccount(long replenishAmount, long userID, long adminID) throws Exception {
+		return getDataServerService().replenishAccount(replenishAmount, userID, adminID);
 	}
-	private DataServerService getDataSer() {
-		if(dataSer==null) {
-			dataSer=SingletonSpringContext.getInstance().getContext().getBean(DataServerService.class);
+
+	@Override
+	public Long debitAnAccount(long debitAmount, long userID, long adminID) throws Exception {
+		return getDataServerService().debitAnAccount(debitAmount, userID, adminID);
+	}
+
+	private DataServerService getDataServerService() {
+		if (dataServerService == null) {
+			dataServerService = SingletonSpringContext.getBean(DataServerService.class);
 		}
-		return dataSer;
+		return dataServerService;
 	}
 
 }

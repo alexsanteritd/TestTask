@@ -9,8 +9,9 @@ import com.google.gwt.view.client.Range;
 import try1.client.model.CUser;
 
 @RemoteServiceRelativePath("dataService")
-public interface DataService extends RemoteService {
+public interface DataService  extends RemoteService {
 	List<CUser> getData(Range range);
 	long getUsersCount();
-	Long updateScore(long difValue, long userID, long adminID);
+	Long debitAnAccount(long debitAmount, long userID, long adminID) throws Exception;
+	Long replenishAccount(long replenishAmount, long userID, long adminID) throws Exception;
 }

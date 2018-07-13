@@ -4,7 +4,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import try1.client.model.ClientUser;
 import try1.client.registerservice.SingUpService;
-import try1.server.services.AutService;
+import try1.server.services.AuthorizationServise;
 import try1.server.singletoncontext.SingletonSpringContext;
 
 public class SingUpServiceImp extends RemoteServiceServlet implements SingUpService {
@@ -13,17 +13,17 @@ public class SingUpServiceImp extends RemoteServiceServlet implements SingUpServ
 	 * 
 	 */
 	private static final long serialVersionUID = 8869341934848610684L;
-	private AutService autService;
+	private AuthorizationServise authorizationServise;
 
 	@Override
 	public ClientUser singUp(String login, String password) {
-		return ClientUserFactory.to(getAutService().createUser(login, password));
+		return ClientUserFactory.to(getAuthorizationServise().createUser(login, password));
 	}
-	private AutService getAutService() {
-		if (autService == null) {
-			autService=SingletonSpringContext.getInstance().getContext().getBean(AutService.class);
+	private AuthorizationServise getAuthorizationServise() {
+		if (authorizationServise == null) {
+			authorizationServise=SingletonSpringContext.getBean(AuthorizationServise.class);
 		}
-		return autService;
+		return authorizationServise;
 	}
 
 }

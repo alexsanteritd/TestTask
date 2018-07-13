@@ -2,6 +2,9 @@ package try1.server.dao;
 
 import java.util.List;
 
+import javax.persistence.LockModeType;
+
+import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
@@ -16,13 +19,33 @@ public class AccountHistoryDao extends AbstractBaseDao<AccountHistory> {
 	@SuppressWarnings("unchecked")
 	public AccountHistory getAccountByUserId(long userId) {
 		Query<AccountHistory> getAccountHistoryQuery = getSession()
-				.createQuery("FROM AccountHistory ah WHERE ah.userId=:userId").setParameter("userId", userId);
-		List<AccountHistory> ahList= getAccountHistoryQuery.list();
-		AccountHistory ah=null;
-		if(ahList.size()>0) {
-			ah=ahList.get(ahList.size()-1);
+				.createQuery("FROM AccountHistory ah WHERE ah.userId=:userId").setParameter("userId", userId)
+				.setLockMode(AccountHistory.class.toString(), LockMode.PESSIMISTIC_WRITE);
+		List<AccountHistory> ahList = getAccountHistoryQuery.list();
+		AccountHistory ah = null;
+		if (ahList.size() > 0) {
+			ah = ahList.get(ahList.size() - 1);
 		}
 		return ah;
+	}
+
+	@SuppressWarnings("unchecked")
+	public AccountHistory getAccountByUserIdWithBlock(long userId) {
+
+		Query<AccountHistory> getAccountHistoryQuery = getSession()
+				.createQuery("FROM AccountHistory ah WHERE ah.userId=:userId").setParameter("userId", userId)
+				.setLockMode(LockModeType.PESSIMISTIC_WRITE);
+		List<AccountHistory> ahList = getAccountHistoryQuery.list();
+		AccountHistory ah = null;
+		if (ahList.size() > 0) {
+			ah = ahList.get(ahList.size() - 1);
+		}
+		return ah;
+	}
+
+	public void unlock() {
+		getSession().lock(AccountHistory.class, LockMode.NONE);
+
 	}
 
 }

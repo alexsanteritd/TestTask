@@ -13,5 +13,8 @@ public interface DataServiceAsync {
 
 	void getUsersCount(AsyncCallback<Long> callback);
 
-	void updateScore(long difValue, long userID, long adminID, AsyncCallback<Long> asyncCallback);
+
+	void debitAnAccount(long debitAmount, long userID, long adminID, AsyncCallback<Long> callback);
+
+	void replenishAccount(long replenishAmount, long userID, long adminID, AsyncCallback<Long> callback);
 }
