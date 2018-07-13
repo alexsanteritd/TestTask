@@ -1,8 +1,0 @@
-gwt-unitCache
-target
-test-classes
-.*
-war/tast2
-*.zip
-war/WEB-INF/classes
-war/WEB-INF/deploy
