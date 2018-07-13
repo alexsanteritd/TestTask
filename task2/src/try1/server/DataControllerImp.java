@@ -7,6 +7,7 @@ import com.google.gwt.view.client.Range;
 
 import try1.client.model.CUser;
 import try1.client.serverdata.DataService;
+import try1.server.dao.CUserFactory;
 import try1.server.model.User;
 import try1.server.services.DataServerService;
 import try1.server.singletoncontext.SingletonSpringContext;

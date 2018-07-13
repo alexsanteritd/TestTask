@@ -19,7 +19,7 @@ public class AuthorizationServiseImp implements AuthorizationServise {
 
 	@Autowired
 	AccountHistoryDao acountHistoryDao;
-	
+
 	@Override
 	@Transactional
 	public User createUser(String login, String password) {
@@ -30,7 +30,7 @@ public class AuthorizationServiseImp implements AuthorizationServise {
 		} else if (userDao.findByEmail(login) == null) {
 			user = new User(login, BCrypt.hashpw(password, BCrypt.gensalt()), "USER");
 			userDao.create(user);
-			AccountHistory ah=new AccountHistory();
+			AccountHistory ah = new AccountHistory();
 			ah.setAdmiId(1);
 			ah.setUserId(user.getId());
 			acountHistoryDao.create(ah);

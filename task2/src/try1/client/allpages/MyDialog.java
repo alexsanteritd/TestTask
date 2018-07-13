@@ -6,7 +6,6 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.FlexTable.FlexCellFormatter;
 import com.google.gwt.user.client.ui.TextBox;
 
 import try1.client.model.CUser;
@@ -83,7 +82,6 @@ public class MyDialog extends DialogBox {
 		// whatever you want its contents to be.
 
 		dataLayout.setCellSpacing(6);
-		FlexCellFormatter cellFormatter = dataLayout.getFlexCellFormatter();
 		dataLayout.setWidget(0, 1, scoreBox);
 		dataLayout.setWidget(1, 0, no);
 		dataLayout.setWidget(1, 1, ok);

@@ -4,5 +4,10 @@ task2/test-classes
 task2/.*
 task2/war/task2
 task2/*.zip
-task2/war/WEB-INF/delploy
-task2/war/WEB-INF/classes
+*.class
+
+*.symbolMap
+
+*.txt
+
+*.class

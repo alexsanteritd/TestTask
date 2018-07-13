@@ -9,7 +9,7 @@ public final class SingletonSpringContext {
 	private static ApplicationContext context;
 
 	private SingletonSpringContext() {
-		this.context = new AnnotationConfigApplicationContext(UserConfiguration.class);
+		SingletonSpringContext.context = new AnnotationConfigApplicationContext(UserConfiguration.class);
 	}
 
 
