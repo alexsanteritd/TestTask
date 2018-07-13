@@ -1,0 +1,8 @@
+task2/gwt-unitCache
+task2/target
+task2/test-classes
+task2/.*
+task2/war/tast2
+task2/*.zip
+task2/war/WEB-INF/classes
+task2/war/WEB-INF/deploy
