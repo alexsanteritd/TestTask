@@ -8,12 +8,19 @@ public class CUser implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3213327774236897707L;
-	float billScore;
+	String email;
+	long account;
 	Timestamp regDate;
+	long id;
 
-	public CUser(float billScore, Timestamp regDate, String email) {
+	public long getId() {
+		return id;
+	}
+
+	public CUser(long id,long billScore, Timestamp regDate, String email) {
 		super();
-		this.billScore = billScore;
+		this.id=id;
+		this.account = billScore;
 		this.regDate = regDate;
 		this.email = email;
 	}
@@ -21,15 +28,12 @@ public class CUser implements Serializable {
 	public CUser() {
 		// TODO Auto-generated constructor stub
 	}
-
-	String email;
-
-	public float getBillScore() {
-		return billScore;
+	public long getAccount() {
+		return account;
 	}
 
-	public void setBillScore(float billScore) {
-		this.billScore = billScore;
+	public void setAccount(long account) {
+		this.account = account;
 	}
 
 	public Timestamp getRegDate() {

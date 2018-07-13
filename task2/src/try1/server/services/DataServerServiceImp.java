@@ -1,47 +1,52 @@
 package try1.server.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import try1.client.model.CUser;
-import try1.server.model.Logs;
-import try1.server.model.LogsDao;
+import try1.server.dao.AccountHistoryDao;
+import try1.server.dao.UserDao;
+import try1.server.model.AccountHistory;
 import try1.server.model.User;
-import try1.server.model.UserDao;
 
 @Service
 public class DataServerServiceImp implements DataServerService {
 	@Autowired
 	UserDao userDao;
 	@Autowired
-	LogsDao logsDao;
+	AccountHistoryDao acountHistoryDao;
 
 	@Override
-	public List<CUser> getData(int start, int end) {
-		List<User> userList = (List<User>) userDao.findAllWhere(start, end, "role", "User");
-		List<CUser> cuserList = new ArrayList<CUser>();
-		for (User u : userList) {
-			cuserList.add(new CUser(u.getBill().getBillScore(), u.getRegistationsDate(), u.getEmail()));
-		}
-		return cuserList;
+	public List<User> getData(int start, int end) {
+		return userDao.findAllUsers(start, end);
 	}
 
 	@Override
 	public Long getUsersCount() {
-		return userDao.countAllWhere("role", "USER");
+		return userDao.countAllUsers();
 	}
 
 	@Override
-	public Float updateScore(float plusValue, String email,String adminEmail) {
-		User user = userDao.findByParam("email", email);
-		float billScore=user.getBill().getBillScore()+plusValue;
-		user.getBill().setBillScore(billScore);
-		userDao.update(user);
-		logsDao.create(new Logs(email,adminEmail,plusValue));
-		return user.getBill().getBillScore();
+	public Long changeAccount(long difValue, long userId, long adminId) {
+		AccountHistory accountHistory = acountHistoryDao.getAccountByUserId(userId);
+		long account = 0;
+		if (difValue != 0 && userId > 0 && adminId > 0) {
+			if (accountHistory != null) {
+				AccountHistory newAccountHistory;
+				account = accountHistory.getAccount();
+				if (difValue > 0) {
+					account += difValue;
+					newAccountHistory = new AccountHistory(difValue, 0, account);
+				} else {
+					account += difValue;
+					newAccountHistory = new AccountHistory(0, difValue, account);
+				}
+				newAccountHistory.setUserId(userId);
+				newAccountHistory.setAdmiId(adminId);
+				acountHistoryDao.create(newAccountHistory);
+			}
+		}
+		return account;
 	}
-
 }

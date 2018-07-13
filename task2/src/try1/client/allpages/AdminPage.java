@@ -101,10 +101,21 @@ public class AdminPage implements Pages {
 		
 		
 		
-		TextColumn<CUser> billScore = new TextColumn<CUser>() {
+		TextColumn<CUser> Account = new TextColumn<CUser>() {
 			@Override
 			public String getValue(CUser object) {
-				return NumberFormat.getFormat("#0.00").format(object.getBillScore()) + " $";
+				long account=object.getAccount();
+				String decimal="";
+				int fraction=(int)(account%100);
+				if (fraction<=0) {
+					decimal="00";
+				}else if(fraction<10) {
+					decimal="0"+fraction;
+				}
+				else {
+					decimal=String.valueOf(fraction);
+				}
+				return account/100+"."+decimal+" $";
 			}
 		};
 		
@@ -118,7 +129,7 @@ public class AdminPage implements Pages {
 		dataTable.setWidth("500px");
 		dataTable.setHeight("500px");
 		dataTable.addColumn(email, "email");
-		dataTable.addColumn(billScore, "Счет");
+		dataTable.addColumn(Account, "Счет");
 		dataTable.addColumn(regData, "Дата регистрации");
 		dataTable.setVisible(true);
 		

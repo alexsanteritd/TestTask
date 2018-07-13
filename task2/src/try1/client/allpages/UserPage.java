@@ -1,6 +1,5 @@
 package try1.client.allpages;
 
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.DecoratorPanel;
@@ -43,8 +42,18 @@ public class UserPage implements Pages {
 		mainpanel.add(loginLayout);
 	}
 
-	public void setBill(float billScore) {
-		loginLayout.setHTML(1, 1, "<h2> " + NumberFormat.getFormat("#0.00").format(billScore) + " $<h2>");
+	public void setAccount(long account) {
+		String decimal="";
+		int fraction=(int)(account%100);
+		if (fraction<=0) {
+			decimal="00";
+		}else if(fraction<10) {
+			decimal="0"+fraction;
+		}
+		else {
+			decimal=String.valueOf(fraction);
+		}
+		loginLayout.setHTML(1, 1, "<h2> " + account/100+"."+ decimal + " $<h2>");
 	}
 	public Anchor getLogOut(){
 		return logOut;

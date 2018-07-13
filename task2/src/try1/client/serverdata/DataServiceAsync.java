@@ -13,5 +13,5 @@ public interface DataServiceAsync {
 
 	void getUsersCount(AsyncCallback<Long> callback);
 
-	void updateScore(float plusValue, String login, String adminslogin, AsyncCallback<Float> callback);
+	void updateScore(long difValue, long userID, long adminID, AsyncCallback<Long> asyncCallback);
 }

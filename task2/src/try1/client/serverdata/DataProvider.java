@@ -1,5 +1,4 @@
 package try1.client.serverdata;
-
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
@@ -27,13 +26,23 @@ public class DataProvider extends AsyncDataProvider<CUser> {
 	protected void onRangeChanged(HasData<CUser> display) {
 		final Range range = display.getVisibleRange();
 		final HasData<CUser> disp = display;
-		int start = range.getStart();
 		dataService.getData(range, new AsyncCallback<List<CUser>>() {
 
 			@Override
 			public void onSuccess(List<CUser> result) {
 				disp.setRowData(range.getStart(), result);
+				dataService.getUsersCount(new AsyncCallback<Long>() {
 
+					@Override
+					public void onFailure(Throwable caught) {
+						Window.alert(caught.toString());
+					}
+
+					@Override
+					public void onSuccess(Long result) {
+						disp.setRowCount(result.intValue(), false);
+					}
+				});
 			}
 
 			@Override

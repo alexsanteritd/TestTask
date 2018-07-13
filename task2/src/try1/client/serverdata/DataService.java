@@ -12,5 +12,5 @@ import try1.client.model.CUser;
 public interface DataService extends RemoteService {
 	List<CUser> getData(Range range);
 	long getUsersCount();
-	float updateScore(float plusValue, String login, String adminslogin);
+	Long updateScore(long difValue, long userID, long adminID);
 }

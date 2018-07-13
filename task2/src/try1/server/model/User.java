@@ -2,25 +2,21 @@ package try1.server.model;
 
 import java.sql.Timestamp;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "users")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator="User_Seq")
+	@SequenceGenerator(name = "User_Seq", sequenceName = "SEQUENCE_USERS",allocationSize=1,initialValue=2)
     @Column(name="id", nullable=false)
 	long id;
 	@Column(name = "email", nullable=false)
@@ -31,9 +27,16 @@ public class User {
 	String role;
 	@Column(name = "registrationsdate", nullable=false)
 	private Timestamp registationsDate;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id")
-	private Bill bill;
+	@Transient
+	private AccountHistory accountHistory;
+	
+	public AccountHistory getAccountHistory() {
+		return accountHistory;
+	}
+
+	public void setAccountHistory(AccountHistory accountHistory) {
+		this.accountHistory = accountHistory;
+	}
 
 	public User() {	
 		// TODO Auto-generated constructor stub
@@ -88,18 +91,10 @@ public class User {
 		this.role = role;
 	}
 
-  public Bill getBill() {
-		return bill;
-	}
-
-	public void setBill(Bill bill) {
-		this.bill = bill;
-	}
-
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", pass=" + pass + ", role=" + role + ", registationsDate="
-				+ registationsDate + ", bill=" + bill + "]";
+				+ registationsDate+ "]";
 	}
 
 

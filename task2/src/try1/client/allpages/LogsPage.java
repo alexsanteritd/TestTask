@@ -26,7 +26,7 @@ import com.google.gwt.view.client.NoSelectionModel;
 import try1.client.model.CUser;
 import try1.client.serverdata.DataProvider;
 
-public class LogsPage {
+public class LogsPage implements Pages{
 	private VerticalPanel mainpanel = new VerticalPanel();
 	/** Decorator panel for the login form */
 	private DecoratorPanel decPanel = new DecoratorPanel();
@@ -95,7 +95,7 @@ public class LogsPage {
 		TextColumn<CUser> billScore = new TextColumn<CUser>() {
 			@Override
 			public String getValue(CUser object) {
-				return NumberFormat.getFormat("#0.00").format(object.getBillScore()) + " $";
+				return NumberFormat.getFormat("#0.00").format(object.getAccount()) + " $";
 			}
 		};
 		

@@ -20,7 +20,7 @@ public class UserPageController implements PagesController {
 	}
 
 	public void onStart() {
-		userPage.setBill(cont.getClientUser().getBillScore());
+		userPage.setAccount(cont.getClientUser().getAccount());
 	}
 	private void addHandlers() {
 		userPage.getLogOut().addClickHandler(new ClickHandler() {
@@ -39,7 +39,7 @@ public class UserPageController implements PagesController {
 
 	@Override
 	public void clear() {
-		userPage.setBill(0f);
+		userPage.setAccount(0l);
 	}
 
 	@Override

@@ -1,58 +1,43 @@
 package try1.client.model;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 
 public class ClientUser implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4132447638010459819L;
-	float billScore;
+	long account;
 	String accsessLevel;
-	Timestamp regDate;
-	String email;
-	
-	public ClientUser(float billScore, String email, Timestamp regDate) {
-		super();
-		this.billScore = billScore;
-		this.accsessLevel = null;
-		this.regDate = regDate;
-		this.email=email;
+	long id;
+
+	public long getId() {
+		return id;
 	}
 
-	public ClientUser(String accsessLevel, float billScore) {
+	public ClientUser(Long id, String accsessLevel, long billScore) {
+		this.id=id;
 		this.accsessLevel = accsessLevel;
-		this.billScore = billScore;
-		regDate = null;
-	}
+		this.account = billScore;	}
 
 	public ClientUser() {
 	}
 
-	public Timestamp getRegDate() {
-		return regDate;
+	public long getAccount() {
+		return account;
 	}
 
-	public float getBillScore() {
-		return billScore;
-	}
-
-	public void setBillScore(float billScore) {
-		this.billScore = billScore;
+	public void setAccount(long billScore) {
+		this.account = billScore;
 	}
 
 	public String getAccsessLevel() {
 		return accsessLevel;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ClientUser [billScore=" + billScore + ", accsessLevel=" + accsessLevel + "]";
+		return "ClientUser [account=" + account + ", accsessLevel=" + accsessLevel + ", id=" + id + "]";
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
+	
 }

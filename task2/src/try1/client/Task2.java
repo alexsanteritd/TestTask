@@ -38,7 +38,7 @@ public class Task2 implements EntryPoint {
 		pagesMap.put("ADMIN", new AdminPageController(cont));
 		pagesMap.put("USER", new UserPageController(cont,"LOGIN"));
 		pagesMap.put("SIGN_UP", new SignUpPageController(cont,"LOGIN"));
-		cont.swapTo("ADMIN");
+		cont.swapTo("LOGIN");
 		
 		/**/
 

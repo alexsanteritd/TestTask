@@ -1,9 +1,6 @@
 package try1.client.pagescontrollers;
 
-import java.sql.Timestamp;
-
 import com.google.gwt.cell.client.FieldUpdater;
-import com.google.gwt.core.client.Callback;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -15,13 +12,12 @@ import try1.client.allpages.AdminPage;
 import try1.client.allpages.MyDialog;
 import try1.client.controller.ControllerI;
 import try1.client.model.CUser;
-import try1.client.model.ClientUser;
 import try1.client.serverdata.DataService;
 import try1.client.serverdata.DataServiceAsync;
 
 public class AdminPageController implements PagesController {
-	private AdminPage ap = new AdminPage();
-	private MyDialog md = new MyDialog();
+	private AdminPage ap;
+	private MyDialog md;
 	DataServiceAsync dataService;
 	ControllerI cont;
 
@@ -33,12 +29,16 @@ public class AdminPageController implements PagesController {
 	public AdminPageController(ControllerI cont) {
 		this();
 		this.cont=cont;
-		cont.setClientUser(new ClientUser(0,"admin",new Timestamp(System.currentTimeMillis())));
 	}
 
 	public AdminPageController() {
-		dataService = GWT.create(DataService.class);
+	}
 
+	@Override
+	public void onStart() {
+		ap = new AdminPage();
+		md = new MyDialog();				
+		dataService = GWT.create(DataService.class);
 		ap.getLogAnchor().addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
@@ -68,7 +68,7 @@ public class AdminPageController implements PagesController {
 			public void onClick(ClickEvent event) {
 				md.hide();
 				try {
-				dataService.updateScore(Float.parseFloat(md.getScoreBox().getText()), md.getCUser().getEmail(),cont.getClientUser().getEmail(), new AsyncCallback<Float>() {
+				dataService.updateScore(md.getScoreBoxValue(), md.getCUser().getId(),cont.getClientUser().getId(), new AsyncCallback<Long>() {
 
 					@Override
 					public void onFailure(Throwable caught) {
@@ -76,8 +76,8 @@ public class AdminPageController implements PagesController {
 					}
 
 					@Override
-					public void onSuccess(Float result) {
-						md.getCUser().setBillScore(result);
+					public void onSuccess(Long result) {
+						md.getCUser().setAccount(result);
 						ap.getDataTable().redraw();
 					}
 				});
@@ -94,11 +94,6 @@ public class AdminPageController implements PagesController {
 				md.getScoreBox().setText("");
 			}
 		});
-
-	}
-
-	@Override
-	public void onStart() {
 		ap.getDataTable().redraw();
 		ap.getDataTable().setVisible(true);
 

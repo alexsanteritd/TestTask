@@ -1,19 +1,15 @@
 package try1.server;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.google.gwt.view.client.Range;
 
 import try1.client.model.CUser;
 import try1.client.serverdata.DataService;
-import try1.server.config.UserConfiguration;
+import try1.server.model.User;
 import try1.server.services.DataServerService;
+import try1.server.singletoncontext.SingletonSpringContext;
 
 public class DataControllerImp extends RemoteServiceServlet implements DataService {
 
@@ -22,24 +18,29 @@ public class DataControllerImp extends RemoteServiceServlet implements DataServi
 	 */
 	private static final long serialVersionUID = 6414105922524292637L;
 
-	ApplicationContext context = new AnnotationConfigApplicationContext(UserConfiguration.class);
-	DataServerService dataSer=context.getBean(DataServerService.class);
+	DataServerService dataSer;
 	
 	@Override
 	public List<CUser> getData(Range range) {
-		return dataSer.getData(range.getStart(), range.getStart()+range.getLength());
+		List<User> usersList=getDataSer().getData(range.getStart(), range.getLength());
+		return CUserFactory.to(usersList);
 	}
 
 	@Override
 	public long getUsersCount() {
-		// TODO Auto-generated method stub
-		return dataSer.getUsersCount();
+		return getDataSer().getUsersCount();
 	}
 
 	@Override
-	public float updateScore(float plusValue, String login, String adminslogin) {
-		return dataSer.updateScore(plusValue, login,adminslogin);
+	public Long updateScore(long difValue, long userID,long adminID) {
+		return getDataSer().changeAccount(difValue, userID,adminID);
 		
+	}
+	private DataServerService getDataSer() {
+		if(dataSer==null) {
+			dataSer=SingletonSpringContext.getInstance().getContext().getBean(DataServerService.class);
+		}
+		return dataSer;
 	}
 
 }
